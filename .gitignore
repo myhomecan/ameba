@@ -2,3 +2,5 @@
 *~
 tags
 build/application/Debug/bin/*
+build/application/Debug/obj
+build/fwsize.gdb

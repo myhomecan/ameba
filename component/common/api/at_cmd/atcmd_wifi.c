@@ -1464,7 +1464,7 @@ void print_wlan_help(void *arg){
 #elif ATCMD_VER == ATVER_2 // UART module at command
 
 //ATPA=<ssid>,<pwd>,<chl>,<hidden>[,<max_conn>]
-void fATPA(void *arg)
+void fATPA(void *arg) //create AP
 {
 	int argc, error_no = 0;
 	char *argv[MAX_ARGC] = {0};
@@ -1718,7 +1718,7 @@ static int _get_ap_security_mode(IN char * ssid, OUT rtw_security_t *security_mo
 }
 
 //ATPN=<ssid>,<pwd>,<key_id>(,<bssid>)
-void fATPN(void *arg)
+void fATPN(void *arg) //join
 {
 	int argc, error_no = 0;
 	int i,j;
@@ -2575,11 +2575,38 @@ void fATWU(void *arg)
 	printf("Please set CONFIG_BSD_TCP 1 in platform_opts.h to enable ATWU command\n");
 #endif
 }
+
 #elif ATCMD_VER == ATVER_2 // uart at command
 //move to atcmd_lwip.c
 #endif
 #endif
+
+void fATXX(void *);
+void fATXX(void *arg)
+{
+  tcpclient_start();
+}
+
+int run_config_mode(void);
+int run_prod_mode(void);
+
+void fATXS(void *);
+void fATXS(void *arg)
+{
+  run_config_mode();
+}
+
+void fATXA(void *);
+void fATXA(void *arg)
+{
+  run_prod_mode();
+}
+
+
 log_item_t at_wifi_items[ ] = {
+  {"ATXX", fATXX,},
+  {"ATXS", fATXS,},
+  {"ATXA", fATXA,},
 #if ATCMD_VER == ATVER_1
 #if CONFIG_LWIP_LAYER
 	{"ATWL", fATWL,},

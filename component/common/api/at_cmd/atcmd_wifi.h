@@ -2,6 +2,7 @@
 #define __ATCMD_WIFI_H__
 #include "main.h"
 #include "lwip_netconf.h"
+#include "tcpclient.h"
 
 #ifndef WLAN0_NAME
   #define WLAN0_NAME		"wlan0"
@@ -108,7 +109,8 @@ typedef enum {
 	AT_PARTITION_ALL = 0,
 	AT_PARTITION_UART = 1,
 	AT_PARTITION_WIFI = 2,
-	AT_PARTITION_LWIP = 3
+	AT_PARTITION_LWIP = 3,
+	AT_PARTITION_TALLY = 4
 } AT_PARTITION;
 
 typedef enum {
@@ -126,9 +128,13 @@ typedef enum {
 #define WIFI_CONF_DATA_OFFSET			(UART_CONF_DATA_OFFSET+UART_CONF_DATA_SIZE)
 #define WIFI_CONF_DATA_SIZE				((((sizeof(struct atcmd_wifi_conf)-1)>>2) + 1)<<2)
 
-//fouth segment for lwip config
+//third segment for lwip config
 #define LWIP_CONF_DATA_OFFSET			(WIFI_CONF_DATA_OFFSET+WIFI_CONF_DATA_SIZE)
 #define LWIP_CONF_DATA_SIZE				((((sizeof(struct atcmd_lwip_conf)-1)>>2) + 1)<<2)
+
+//fouth segment for tally config
+#define TALLY_CONF_DATA_OFFSET		(LWIP_CONF_DATA_OFFSET+LWIP_CONF_DATA_SIZE)
+#define TALLY_CONF_DATA_SIZE			((((sizeof(struct tcpclient_conf)-1)>>2) + 1)<<2)
 
 extern void atcmd_update_partition_info(AT_PARTITION id, AT_PARTITION_OP ops, u8 *data, u16 len);
 

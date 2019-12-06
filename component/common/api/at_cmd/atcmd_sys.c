@@ -717,8 +717,8 @@ void fATSW(void *arg){
 	// make sure AP mode
 	LoadWifiConfig();
 	if(wifi_setting.mode != RTW_MODE_AP){
-		at_printf("\r\n[ATSW] ERROR:3");
-		return;
+		at_printf("\r\n[ATSW] ERROR:3_ ok");
+		//return;
 	}
 		
 	switch(argv[1][0]) {
@@ -1060,6 +1060,8 @@ void fATSX(void *arg)
 
 log_item_t at_sys_items[] = {
 #if ATCMD_VER == ATVER_1
+#error mode1
+  /*
 	{"ATSD", fATSD,},	// Dump register
 	{"ATSE", fATSE,},	// Edit register
 	{"ATSC", fATSC,},	// Clear OTA signature
@@ -1084,6 +1086,7 @@ log_item_t at_sys_items[] = {
 	{"ATS!", fATSc,},	// Debug config setting
 	{"ATS#", fATSt,},	// test command
 	{"ATS?", fATSx,},	// Help
+*/
 #elif ATCMD_VER == ATVER_2 //#if ATCMD_VER == ATVER_1
 	{"AT", 	 fATS0,},	// test AT command ready
 	{"ATS?", fATSh,},	// list all AT command
@@ -1092,18 +1095,22 @@ log_item_t at_sys_items[] = {
 	{"ATSP", fATSP,},	// power saving mode
 	{"ATSE", fATSE,},	// enable and disable echo
 #if CONFIG_WLAN
+
 #if CONFIG_WEBSERVER
 	{"ATSW", fATSW,},	// start webserver
 #endif
 	{"ATSY", fATSY,},	// factory reset
+
 #if CONFIG_OTA_UPDATE
 	{"ATSO", fATSO,},	// ota upgrate
 	{"ATSC", fATSC,},	// chose the activited image
 #endif
+
 #if CONFIG_EXAMPLE_UART_ATCMD
 	{"ATSU", fATSU,},	// AT uart configuration
 #endif
 #endif
+
 	{"ATSG", fATSG,},	// GPIO control
 #if CONFIG_UART_XMODEM
 	{"ATSX", fATSX,},	// uart xmodem upgrade

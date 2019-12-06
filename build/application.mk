@@ -1,7 +1,7 @@
 
 # Initialize tool chain
 # -------------------------------------------------------------------
-ARM_GCC_TOOLCHAIN = /usr/local/gcc-arm-embedded-5_4-2016q2-20160622/
+ARM_GCC_TOOLCHAIN = /usr/local/gcc-arm-embedded-8-2018-q4-major/
 AMEBA_TOOLDIR = ../component/soc/realtek/8195a/misc/iar_utility/common/tools/
 FLASH_TOOLDIR = ../component/soc/realtek/8195a/misc/gcc_utility/
 
@@ -372,6 +372,9 @@ SRC_C += ../component/common/file_system/fatfs/disk_if/src/sdcard.c
 SRC_C += ../component/common/application/xmodem/uart_fw_update.c
 #user 
 SRC_C += ../src/main.c
+SRC_C += ../src/wireencoder.c
+SRC_C += ../src/webcfg.c
+SRC_C += ../src/tcpclient.c
 
 # Generate obj list
 # -------------------------------------------------------------------
@@ -387,7 +390,7 @@ DEPENDENCY_LIST = $(addprefix $(OBJ_DIR)/,$(patsubst %.c,%.d,$(SRC_C_LIST)))
 # -------------------------------------------------------------------
 
 CFLAGS =
-CFLAGS += -DM3 -DCONFIG_PLATFORM_8195A -DGCC_ARMCM3 -DARDUINO_SDK
+CFLAGS += -DM3 -DCONFIG_WEBSERVER=1 -DCONFIG_PLATFORM_8195A -DGCC_ARMCM3 -DARDUINO_SDK
 CFLAGS += -mcpu=cortex-m3 -mthumb -g2 -w -O2 -Wno-pointer-sign -fno-common -fmessage-length=0  -ffunction-sections -fdata-sections -fomit-frame-pointer -fno-short-enums -mcpu=cortex-m3 -DF_CPU=166000000L -std=gnu99 -fsigned-char
 
 LFLAGS = 

@@ -61,7 +61,7 @@
 
 //on/off relative commands in log service
 #define CONFIG_SSL_CLIENT	0
-#define CONFIG_WEBSERVER	0
+#define CONFIG_WEBSERVER	1
 #define CONFIG_OTA_UPDATE	1
 #define CONFIG_BSD_TCP		1//NOTE : Enable CONFIG_BSD_TCP will increase about 11KB code size
 #define CONFIG_AIRKISS		0//on or off tencent airkiss

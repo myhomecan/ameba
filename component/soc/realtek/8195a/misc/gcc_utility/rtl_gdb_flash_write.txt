@@ -3,7 +3,7 @@
 #===============================================================================
 #set GDB connection 
 set remotetimeout 100000
-target remote :2331
+target remote :3333
 
 #===============================================================================
 #set file path
@@ -27,7 +27,7 @@ set debug frame 0
 set debug infrun 0
 set debug observer 0
 set debug overload 0
-set debugvarobj 0
+#set debugvarobj 0
 set pagination off
 set print address off
 set print symbol-filename off
@@ -40,9 +40,9 @@ set debug remote 0
 
 #===============================================================================
 #set JTAG and external SRAM
-monitor reset 1
+monitor reset init
+monitor halt
 monitor sleep 20
-monitor clrbp
 #===============================================================================
 #Variables declaration (1)
 #binary file size
@@ -69,13 +69,12 @@ set $Temp = 0x0
 
 #===============================================================================
 #Load flash download file
-file ../../../component/soc/realtek/8195a/misc/gcc_utility/target_NORMAL.axf
+file ../component/soc/realtek/8195a/misc/gcc_utility/target_NORMAL.axf
 
 #Load the file
 lo
 
 printf "Load flash controller.\n"
-
 #===============================================================================
 #Set for executing flash controller funciton
 set $Temp = {int}($PERI_ON_BASE+$REG_SOC_PERI_FUNC0_EN)

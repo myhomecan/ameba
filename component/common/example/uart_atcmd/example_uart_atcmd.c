@@ -28,8 +28,8 @@
 
 #if CONFIG_EXAMPLE_UART_ATCMD
 
-typedef int (*init_done_ptr)(void);
-extern init_done_ptr p_wlan_init_done_callback;
+//typedef int (*init_done_ptr)(void);
+//extern init_done_ptr p_wlan_init_done_callback;
 extern char log_buf[LOG_SERVICE_BUFLEN];
 extern xSemaphoreHandle log_rx_interrupt_sema;
 extern void serial_rx_fifo_level(serial_t *obj, SerialFifoLevel FifoLv);
@@ -66,6 +66,10 @@ void atcmd_update_partition_info(AT_PARTITION id, AT_PARTITION_OP ops, u8 *data,
 		case AT_PARTITION_LWIP:
 			size = LWIP_CONF_DATA_SIZE;
 			offset = LWIP_CONF_DATA_OFFSET;
+			break;
+		case AT_PARTITION_TALLY:
+			size = TALLY_CONF_DATA_SIZE;
+			offset = TALLY_CONF_DATA_OFFSET;
 			break;
 		case AT_PARTITION_ALL:
 			size = 0x1000;
@@ -556,11 +560,14 @@ static void uart_atcmd_thread(void *param)
 	atcmd_lwip_restore_from_flash();
 	rtw_msleep_os(20);
 	uart_atcmd_main();
-	at_printf("\r\nAT COMMAND READY HERE %s:%d!!!!",__FILE__,__LINE__);
-	if(atcmd_lwip_is_tt_mode())
+	at_printf("\r\nAT COMMAND READY HERE~~~ %s:%d!!!!",__FILE__,__LINE__);
+	if(atcmd_lwip_is_tt_mode()){
+    at_printf("\r\nAT %s:%d!!!!",__FILE__,__LINE__);
 		at_printf(STR_END_OF_ATDATA_RET);
-	else
+  }else{
+    at_printf("\r\nAT %s:%d!!!!",__FILE__,__LINE__);
 		at_printf(STR_END_OF_ATCMD_RET);
+  }
 	_AT_DBG_MSG(AT_FLAG_COMMON, AT_DBG_ALWAYS, STR_END_OF_ATCMD_RET); 
 	vTaskDelete(NULL);
 }
@@ -591,7 +598,8 @@ static void sw_rtc_tick_handler(uint32_t id)
 
 
 int uart_atcmd_module_init(void){
-    if(xTaskCreate(uart_atcmd_thread, ((const char*)"uart_atcmd_thread"), 1024, NULL, tskIDLE_PRIORITY+1 , NULL) != pdPASS)
+    if(xTaskCreate(uart_atcmd_thread, ((const char*)"uart_atcmd_thread"), 1024,
+          NULL, tskIDLE_PRIORITY+1 , NULL) != pdPASS)
         printf("\n\r%s xTaskCreate(uart_atcmd_thread) failed", __FUNCTION__);
 
     gpio_init(&gpio_led, GPIO_LED_PIN);
@@ -608,7 +616,7 @@ void example_uart_atcmd(void)
 {
 	//if(xTaskCreate(uart_atcmd_thread, ((const char*)"uart_atcmd_thread"), 1024, NULL, tskIDLE_PRIORITY + 1 , NULL) != pdPASS)
 	//	printf("\n\r%s xTaskCreate(uart_atcmd_thread) failed", __FUNCTION__);
-	p_wlan_init_done_callback = uart_atcmd_module_init;
+	//p_wlan_init_done_callback = uart_atcmd_module_init;
 	return;
 }
 #endif

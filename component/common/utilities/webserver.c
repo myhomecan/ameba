@@ -464,6 +464,7 @@ static void LoadWifiSetting()
 
 #if CONFIG_READ_FLASH
 #ifndef CONFIG_PLATFORM_8195A
+/*
 void LoadWifiConfig()
 {
     rtw_wifi_config_t local_config;
@@ -534,6 +535,7 @@ int StoreApInfo()
 
 	return 0;
 }
+*/
 
 
 #else
@@ -1214,7 +1216,7 @@ void vBasicWEBServer( void *pvParameters )
 
 #if CONFIG_READ_FLASH
   /* Load wifi_config */
-    LoadWifiConfig();
+    //LoadWifiConfig();
     RestartSoftAP();
 #endif
     //printf("\r\n-0\n");

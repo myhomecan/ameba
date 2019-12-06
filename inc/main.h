@@ -7,11 +7,15 @@
 #define CONFIG_WLAN	1
 #endif
 
+#define CONFIG_WEBSERVER	1
+
 /* Header file declaration*/
 void wlan_network();
 
 /* Interactive Mode */
 #define SERIAL_DEBUG_RX 1
+
+#define PLATFORM_FREERTOS 1
 
 /* WLAN and Netork */
 #define STA_MODE_SSID	"ap"    /* Set SSID here */
